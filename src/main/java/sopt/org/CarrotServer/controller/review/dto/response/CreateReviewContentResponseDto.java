@@ -1,4 +1,4 @@
-package sopt.org.CarrotServer.controller.review.dto.request;
+package sopt.org.CarrotServer.controller.review.dto.response;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -6,9 +6,9 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class ReviewRequestDto {
-
-    private Long senderReviewContentId;
+public class CreateReviewContentResponseDto {
 
     private Long receiverReviewContentId;
+    private Long senderReviewContentId;
+
 }

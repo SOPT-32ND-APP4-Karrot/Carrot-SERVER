@@ -1,8 +1,6 @@
 package sopt.org.CarrotServer.domain.review;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import sopt.org.CarrotServer.domain.BaseTimeEntity;
 
 import javax.persistence.*;
@@ -24,4 +22,9 @@ public class ReviewContent extends BaseTimeEntity {
 //    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //    @JoinColumn(name = "user_id")
     // private User writer;
+
+    @Builder
+    public ReviewContent(String content) {
+        this.content = content;
+    }
 }
