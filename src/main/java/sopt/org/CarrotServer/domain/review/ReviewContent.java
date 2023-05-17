@@ -16,6 +16,7 @@ public class ReviewContent extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewContentId;
 
+    @Enumerated()
     @Column(name = "content")
     private String content;
 

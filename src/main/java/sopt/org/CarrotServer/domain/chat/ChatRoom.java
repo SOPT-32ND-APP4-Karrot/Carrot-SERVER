@@ -3,6 +3,7 @@ package sopt.org.CarrotServer.domain.chat;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import sopt.org.CarrotServer.domain.BaseTimeEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.List;
 @Table(name = "CHAT_ROOM")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ChatRoom {
+public class ChatRoom extends BaseTimeEntity {
 
     @Id
     @Column(name = "chat_room_id")

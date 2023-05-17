@@ -33,6 +33,6 @@ public enum ReviewCategory {
 
     ;
 
-    private final String content;
+    private final String name;
 
 }
