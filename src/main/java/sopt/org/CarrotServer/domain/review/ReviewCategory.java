@@ -29,10 +29,20 @@ public enum ReviewCategory {
     NOT_CONTACT("거래 시간과 장소를 정한 후 연락이 안돼요."),
     NOT_COME_PLACE("약속 장소에 나타나지 않았어요."),
     DIRECTLY_CANCEL("거래 시간과 장소를 정한 후 거래 직전 취소했어요."),
+    ETC("직접 입력")  //TODO 후기 카테고리 외 직접입력 구현 고민
 
 
     ;
 
     private final String name;
+
+    public static ReviewCategory nameOf(String name) {
+        for (ReviewCategory category : ReviewCategory.values()) {
+            if (category.getName().equals(name)) {
+                return category;
+            }
+        }
+        return ETC;
+    }
 
 }
