@@ -15,6 +15,6 @@ public class SaleStatusConverter implements AttributeConverter<SaleStatus, Strin
         return EnumSet.allOf(SaleStatus.class).stream()
                 .filter(saleStatus -> saleStatus.getStatusCode().equals(dbData))
                 .findAny()
-                .orElseThrow();
+                .orElseThrow(); //TODO: exception 추가 예정
     }
 }

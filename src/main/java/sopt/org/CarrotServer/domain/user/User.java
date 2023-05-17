@@ -1,6 +1,7 @@
 package sopt.org.CarrotServer.domain.user;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import sopt.org.CarrotServer.domain.BaseTimeEntity;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "USER")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseTimeEntity {
@@ -32,6 +34,16 @@ public class User extends BaseTimeEntity {
 
     @Column(nullable = false)
     private String profileImgUrl;
+
+    @Builder
+    public User(String nickname, String phone, Double temperature, String location, String profileImgUrl, List<Sale> sales) {
+        this.nickname = nickname;
+        this.phone = phone;
+        this.temperature = temperature;
+        this.location = location;
+        this.profileImgUrl = profileImgUrl;
+        this.sales.addAll(sales);
+    }
 
     //판매한 상품
     @OneToMany(mappedBy = "user") //일대다(1:N)
