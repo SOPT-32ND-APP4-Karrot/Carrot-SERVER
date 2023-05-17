@@ -30,6 +30,10 @@ public class Review extends BaseTimeEntity {
     @JoinColumn(name = "receiver_review_content_id")
     private ReviewContent receiverReviewContent;
 
+    //== 연관관계 메소드 ==//
+    // TODO User에 판매자 여부 구분 필드 넣어서 sender 인지 receiver 인지 여기서 set으로 지정
+    public void setReview(ReviewContent reviewContent) {
+    }
 
 
 }

@@ -1,14 +1,12 @@
 package sopt.org.CarrotServer.controller.review;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import sopt.org.CarrotServer.controller.review.dto.request.CreateReviewRequestDto;
-import sopt.org.CarrotServer.controller.review.dto.request.ReviewContentRequestDto;
-import sopt.org.CarrotServer.domain.review.Review;
+import sopt.org.CarrotServer.controller.review.dto.request.CreateReviewContentRequestDto;
 import sopt.org.CarrotServer.service.review.ReviewContentService;
 import sopt.org.CarrotServer.service.review.ReviewService;
 
@@ -26,7 +24,7 @@ public class ReviewController {
     }
 
     @PostMapping("/content")
-    public Long createReviewContent(@RequestBody ReviewContentRequestDto request) {
+    public Long createReviewContent(@RequestBody CreateReviewContentRequestDto request) {
         return reviewContentService.createReviewContent(request);
     }
 }

@@ -32,9 +32,19 @@ public class ChatMessage extends BaseTimeEntity {
 //    @JoinColumn(name = "user_id")
     // private User writer;
 
+
+    //== 연관관계 메소드 ==//
     public void setChatRoom(ChatRoom chatRoom) {
         this.chatRoom = chatRoom;
+        chatRoom.getChatMessageList().add(this);
     }
 
+    /*public void setWriter(User user) {
+        if (this.writer != null) {
+            this.writer.getReviewContetList().remove(this);
+        }
 
+        this.writer = user;
+        writer,getReviewContentList().add(this);
+    }*/
 }

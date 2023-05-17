@@ -2,6 +2,7 @@ package sopt.org.CarrotServer.domain.review;
 
 import lombok.*;
 import sopt.org.CarrotServer.domain.BaseTimeEntity;
+import sopt.org.CarrotServer.domain.user.User;
 
 import javax.persistence.*;
 
@@ -28,4 +29,14 @@ public class ReviewContent extends BaseTimeEntity {
     public ReviewContent(String content) {
         this.content = content;
     }
+
+    //== 연관관계 메소드 ==//
+    /*public void setWriter(User user) {
+        if (this.writer != null) {
+            this.writer.getReviewContetList().remove(this);
+        }
+
+        this.writer = user;
+        writer,getReviewContentList().add(this);
+    }*/
 }
