@@ -71,4 +71,14 @@ public class Sale extends BaseTimeEntity {
     @JoinColumn(name = "userId", nullable = false, foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
     //JoinColumn은 필드 매핑만 해줌 foreignKey의 ConstraintMode.PROVIDER_DEFAULT는 DB에 따라 제약조건이 안 생길수도 있음
     private User user;
+
+    //== 연관관계 메소드 ==//
+    public void setUser(User user) {
+        if (this.user != null) {
+            this.user.getSales().remove(this);
+        }
+
+        this.user = user;
+        user.getSales().add(this);
+    }
 }
