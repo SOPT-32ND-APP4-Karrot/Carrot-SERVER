@@ -1,6 +1,7 @@
 package sopt.org.CarrotServer.domain.chat;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import sopt.org.CarrotServer.domain.BaseTimeEntity;
@@ -33,4 +34,20 @@ public class ChatRoom extends BaseTimeEntity {
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ChatMessage> chatMessageList = new ArrayList<>();
 
+    @Builder
+    public ChatRoom(Sale sale, User writer, List<ChatMessage> chatMessageList) {
+        this.sale = sale;
+        this.writer = writer;
+        this.chatMessageList = chatMessageList;
+    }
+
+    //== 연관관계 메서드 ==//
+    public void setWriter(User user) {
+        if (this.writer != null) {
+            this.writer.getChatRoomList().remove(this);
+        }
+
+        this.writer = user;
+        writer.getChatRoomList().add(this);
+    }
 }

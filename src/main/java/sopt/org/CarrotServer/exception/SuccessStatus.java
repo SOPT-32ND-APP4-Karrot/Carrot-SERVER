@@ -13,7 +13,8 @@ public enum SuccessStatus {
      * 200 OK
      */
     SALE_LIKE_SUCCESS(HttpStatus.OK, "상품의 좋아요 체크에 성공했습니다."),
-    SALE_DISLIKE_SUCCESS(HttpStatus.OK, "상품의 좋아요 취소에 성공했습니다.");
+    SALE_DISLIKE_SUCCESS(HttpStatus.OK, "상품의 좋아요 취소에 성공했습니다."),
+    GET_CHATROOM_INFO_SUCCESS(HttpStatus.OK, "채팅방 정보 조회에 성공했습니다.");
 
 
     private final HttpStatus httpStatus;
