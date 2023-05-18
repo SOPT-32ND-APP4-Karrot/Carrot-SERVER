@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import sopt.org.CarrotServer.domain.BaseTimeEntity;
+import sopt.org.CarrotServer.domain.user.User;
 
 import javax.persistence.*;
 
@@ -18,19 +19,19 @@ public class ChatMessage extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long chatMessageId;
 
-    @Column(name = "content")
+    @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "has_keyword")
+    @Column(name = "has_keyword", nullable = false)
     private boolean hasKeyword;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "chat_room_id")
     private ChatRoom chatRoom;
 
-//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "user_id")
-    // private User writer;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User writer;
 
 
     //== 연관관계 메소드 ==//
@@ -39,12 +40,12 @@ public class ChatMessage extends BaseTimeEntity {
         chatRoom.getChatMessageList().add(this);
     }
 
-    /*public void setWriter(User user) {
+    public void setWriter(User user) {
         if (this.writer != null) {
-            this.writer.getReviewContetList().remove(this);
+            this.writer.getChatMessageList().remove(this);
         }
 
         this.writer = user;
-        writer,getReviewContentList().add(this);
-    }*/
+        writer.getChatMessageList().add(this);
+    }
 }

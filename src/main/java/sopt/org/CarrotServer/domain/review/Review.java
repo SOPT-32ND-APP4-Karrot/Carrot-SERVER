@@ -2,6 +2,7 @@ package sopt.org.CarrotServer.domain.review;
 
 import lombok.*;
 import sopt.org.CarrotServer.domain.BaseTimeEntity;
+import sopt.org.CarrotServer.domain.sale.Sale;
 
 import javax.persistence.*;
 
@@ -18,9 +19,9 @@ public class Review extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
 
-    //    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "sale_id")
-    // private Sale sale;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "sale_id")
+    private Sale sale;
 
     @OneToOne
     @JoinColumn(name = "sender_review_content_id")

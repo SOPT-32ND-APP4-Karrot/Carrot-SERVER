@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import sopt.org.CarrotServer.domain.BaseTimeEntity;
+import sopt.org.CarrotServer.domain.chat.ChatMessage;
+import sopt.org.CarrotServer.domain.review.ReviewContent;
 import sopt.org.CarrotServer.domain.sale.Sale;
 
 import javax.persistence.*;
@@ -16,7 +18,9 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseTimeEntity {
+
     @Id
+    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
@@ -34,6 +38,13 @@ public class User extends BaseTimeEntity {
 
     @Column(nullable = false)
     private String profileImgUrl;
+
+    // TODO User 에서도 양방향 연관관계 매핑을 해줘야 할까?
+    @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ReviewContent> reviewContentList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ChatMessage> chatMessageList = new ArrayList<>();
 
     @Builder
     public User(String nickname, String phone, Double temperature, String location, String profileImgUrl, List<Sale> sales) {

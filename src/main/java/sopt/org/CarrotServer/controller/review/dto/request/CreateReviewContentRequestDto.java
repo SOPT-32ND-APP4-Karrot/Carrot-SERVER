@@ -10,5 +10,5 @@ public class CreateReviewContentRequestDto {
 
     private String content;
 
-//    private Long userId;
+    private Long userId;
 }

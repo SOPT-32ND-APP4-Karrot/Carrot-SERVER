@@ -17,26 +17,27 @@ public class ReviewContent extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewContentId;
 
-    @Enumerated()
-    @Column(name = "content")
-    private String content;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "content", nullable = false)
+    private ReviewCategory content;
 
-//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "user_id")
-    // private User writer;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User writer;
 
     @Builder
-    public ReviewContent(String content) {
+    public ReviewContent(ReviewCategory content, User writer) {
         this.content = content;
+        this.writer = writer;
     }
 
     //== 연관관계 메소드 ==//
-    /*public void setWriter(User user) {
+    public void setWriter(User user) {
         if (this.writer != null) {
-            this.writer.getReviewContetList().remove(this);
+            this.writer.getReviewContentList().remove(this);
         }
 
         this.writer = user;
-        writer,getReviewContentList().add(this);
-    }*/
+        writer.getReviewContentList().add(this);
+    }
 }
