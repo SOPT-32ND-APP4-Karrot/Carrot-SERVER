@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import sopt.org.CarrotServer.common.dto.ApiResponse;
 import sopt.org.CarrotServer.controller.sale.dto.request.CreateSaleRequestDto;
+import sopt.org.CarrotServer.controller.sale.dto.response.SaleDetailResponseDto;
 import sopt.org.CarrotServer.controller.sale.dto.response.SaleResponseDto;
 import sopt.org.CarrotServer.exception.SuccessStatus;
 import sopt.org.CarrotServer.service.sale.SaleService;
@@ -28,4 +29,12 @@ public class SaleController {
     public ApiResponse<List<SaleResponseDto>> getSales() {
         return ApiResponse.success(SuccessStatus.READ_ALL_SALE_SUCCESS, saleService.getSales());
     }
+
+    //[GET] 상세_상품 상세 조회
+    @GetMapping("/{saleId}")
+    public ApiResponse<SaleDetailResponseDto> getSaleById(@PathVariable final Long saleId) {
+        return ApiResponse.success(SuccessStatus.READ_SALE_DETAIL_SUCCESS, saleService.getSaleById(saleId));
+    }
+
+
 }

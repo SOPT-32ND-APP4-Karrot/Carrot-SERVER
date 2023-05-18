@@ -78,6 +78,9 @@ public class Sale extends BaseTimeEntity {
     @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ChatRoom> chatRoomList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "sale",cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<SaleLike> saleLikeList = new ArrayList<>();
+
     //== 연관관계 메소드 ==//
     public void setUser(User user) {
         if (this.user != null) {
