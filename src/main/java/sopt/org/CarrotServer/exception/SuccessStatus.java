@@ -14,7 +14,8 @@ public enum SuccessStatus {
      */
     SALE_LIKE_SUCCESS(HttpStatus.OK, "상품의 좋아요 체크에 성공했습니다."),
     SALE_DISLIKE_SUCCESS(HttpStatus.OK, "상품의 좋아요 취소에 성공했습니다."),
-    GET_CHATROOM_INFO_SUCCESS(HttpStatus.OK, "채팅방 정보 조회에 성공했습니다.");
+    GET_CHATROOM_INFO_SUCCESS(HttpStatus.OK, "채팅방 정보 조회에 성공했습니다."),
+    CREATE_CHAT_MESSAGE_SUCCESS(HttpStatus.OK, "채팅방 메시지 생성에 성공했습니다.");
 
 
     private final HttpStatus httpStatus;

@@ -1,4 +1,7 @@
 package sopt.org.CarrotServer.infrastructure.user;
 
-public interface UserRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import sopt.org.CarrotServer.domain.user.User;
+
+public interface UserRepository extends JpaRepository<User, Long> {
 }

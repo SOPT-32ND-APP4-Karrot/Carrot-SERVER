@@ -1,11 +1,10 @@
 package sopt.org.CarrotServer.controller.chat;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sopt.org.CarrotServer.common.dto.ApiResponse;
+import sopt.org.CarrotServer.controller.chat.dto.request.CreateChatMessageRequestDto;
+import sopt.org.CarrotServer.controller.chat.dto.response.ChatMessageResponseDto;
 import sopt.org.CarrotServer.controller.chat.dto.response.ChatResponseDto;
 import sopt.org.CarrotServer.exception.SuccessStatus;
 import sopt.org.CarrotServer.exception.model.CustomException;
@@ -22,6 +21,15 @@ public class ChatController {
     public ApiResponse<ChatResponseDto> getChatRoom(@PathVariable("chatRoomId") final Long chatRoomId) {
         try {
             return ApiResponse.success(SuccessStatus.GET_CHATROOM_INFO_SUCCESS, chatService.getChatRoomInfo(chatRoomId));
+        } catch (CustomException e) {
+            return ApiResponse.error(e.getErrorStatus());
+        }
+    }
+
+    @PostMapping("")
+    public ApiResponse<ChatMessageResponseDto> createChatMessage(@RequestBody final CreateChatMessageRequestDto request) {
+        try {
+            return ApiResponse.success(SuccessStatus.CREATE_CHAT_MESSAGE_SUCCESS, chatService.createChatMessage(request));
         } catch (CustomException e) {
             return ApiResponse.error(e.getErrorStatus());
         }
