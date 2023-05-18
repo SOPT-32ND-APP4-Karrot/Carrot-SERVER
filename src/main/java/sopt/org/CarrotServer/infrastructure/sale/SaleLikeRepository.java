@@ -20,5 +20,5 @@ public interface SaleLikeRepository extends Repository<SaleLike, SaleLikeId> {
 
     // UPDATE
     // DELETE
-    void remove(SaleLike saleLike);
+    void delete(SaleLike saleLike);
 }

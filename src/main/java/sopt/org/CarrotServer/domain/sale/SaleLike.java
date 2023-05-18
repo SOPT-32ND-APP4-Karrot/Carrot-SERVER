@@ -29,20 +29,21 @@ public class SaleLike extends BaseTimeEntity {
     private Sale sale;
 
     @Builder
-    public SaleLike(User user, Sale sale) {
+    public SaleLike(SaleLikeId saleLikeId, User user, Sale sale) {
+        this.saleLikeId = saleLikeId;
         this.user = user;
         this.sale = sale;
     }
 
     //== 연관관계 메소드 ==//
-    public void setSale(Sale sale) {
+    /*public void setSale(Sale sale) {
         if (this.sale != null) {
             this.sale.getSaleLikeList().remove(this);
         }
 
         this.sale = sale;
         sale.getSaleLikeList().add(this);
-    }
+    }*/
 
     public void deleteSale(Sale sale) {
         this.sale.getSaleLikeList().remove(this);
