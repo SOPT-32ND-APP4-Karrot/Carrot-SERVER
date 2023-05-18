@@ -4,7 +4,6 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import sopt.org.CarrotServer.controller.sale.dto.response.SaleChatRoomResponseDto;
-import sopt.org.CarrotServer.controller.sale.dto.response.SaleResponseDto;
 import sopt.org.CarrotServer.controller.user.dto.response.UserResponseDto;
 import sopt.org.CarrotServer.domain.chat.ChatRoom;
 

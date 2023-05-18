@@ -7,6 +7,7 @@ import sopt.org.CarrotServer.controller.review.dto.request.CreateReviewRequestDt
 import sopt.org.CarrotServer.controller.review.dto.response.ReviewResponseDto;
 import sopt.org.CarrotServer.domain.review.Review;
 import sopt.org.CarrotServer.domain.review.ReviewContent;
+import sopt.org.CarrotServer.exception.ErrorStatus;
 import sopt.org.CarrotServer.exception.model.CustomException;
 import sopt.org.CarrotServer.infrastructure.review.ReviewContentRepository;
 import sopt.org.CarrotServer.infrastructure.review.ReviewRepository;
@@ -40,6 +41,20 @@ public class ReviewService {
 
         review.setReceiverReviewContent(receiverReviewContent);
         review.setSenderReviewContent(senderReviewContent);
+
+        return ReviewResponseDto.of(review);
+    }
+
+    /**
+     * 리뷰 ID로 단건 조회
+     * @param reviewId
+     * @return
+     */
+    public ReviewResponseDto getReviewById(Long reviewId) {
+
+        Review review = reviewRepository.findById(reviewId).orElseThrow(
+                () -> new CustomException(NO_EXISTS_REVIEW)
+        );
 
         return ReviewResponseDto.of(review);
     }

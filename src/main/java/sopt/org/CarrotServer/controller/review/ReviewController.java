@@ -1,10 +1,7 @@
 package sopt.org.CarrotServer.controller.review;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sopt.org.CarrotServer.common.dto.ApiResponse;
 import sopt.org.CarrotServer.controller.review.dto.request.CreateReviewRequestDto;
 import sopt.org.CarrotServer.controller.review.dto.request.CreateReviewContentRequestDto;
@@ -24,7 +21,7 @@ public class ReviewController {
     private final ReviewContentService reviewContentService;
 
     @PostMapping
-    public ApiResponse<ReviewResponseDto> createReview(@RequestBody CreateReviewRequestDto request) {
+    public ApiResponse<ReviewResponseDto> createReview(@RequestBody final CreateReviewRequestDto request) {
         try {
             return ApiResponse.success(SuccessStatus.CREATE_REVIEW_SUCCESS, reviewService.createReview(request));
         } catch (CustomException e) {
@@ -33,9 +30,18 @@ public class ReviewController {
     }
 
     @PostMapping("/content")
-    public ApiResponse<ReviewContentResponseDto> createReviewContent(@RequestBody CreateReviewContentRequestDto request) {
+    public ApiResponse<ReviewContentResponseDto> createReviewContent(@RequestBody final CreateReviewContentRequestDto request) {
         try {
             return ApiResponse.success(SuccessStatus.CREATE_REVIEW_CONTENT_SUCCESS, reviewContentService.createReviewContent(request));
+        } catch (CustomException e) {
+            return ApiResponse.error(e.getErrorStatus());
+        }
+    }
+
+    @GetMapping("/{reviewId}")
+    public ApiResponse<ReviewResponseDto> getReview(@PathVariable("reviewId") final Long reviewId) {
+        try {
+            return ApiResponse.success(SuccessStatus.GET_REVIEW_SUCCESS, reviewService.getReviewById(reviewId));
         } catch (CustomException e) {
             return ApiResponse.error(e.getErrorStatus());
         }
