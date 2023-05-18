@@ -33,4 +33,14 @@ public class SaleLike extends BaseTimeEntity {
         this.user = user;
         this.sale = sale;
     }
+
+    //== 연관관계 메소드 ==//
+    public void setSale(Sale sale) {
+        if (this.sale != null) {
+            this.sale.getSaleLikeList().remove(this);
+        }
+
+        this.sale = sale;
+        sale.getSaleLikeList().add(this);
+    }
 }
