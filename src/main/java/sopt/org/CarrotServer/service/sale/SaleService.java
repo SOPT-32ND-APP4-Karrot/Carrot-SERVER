@@ -7,6 +7,7 @@ import sopt.org.CarrotServer.controller.sale.dto.request.CreateSaleRequestDto;
 import sopt.org.CarrotServer.controller.sale.dto.response.SaleDetailResponseDto;
 import sopt.org.CarrotServer.controller.sale.dto.response.SaleResponseDto;
 import sopt.org.CarrotServer.controller.sale.dto.response.SaleSimpleResponseDto;
+import sopt.org.CarrotServer.controller.sale.dto.response.SellerSaleResponseDto;
 import sopt.org.CarrotServer.domain.sale.Sale;
 import sopt.org.CarrotServer.domain.sale.SaleLikeId;
 import sopt.org.CarrotServer.domain.sale.SaleStatus;
@@ -118,6 +119,13 @@ public class SaleService {
         return SaleSimpleResponseDto.of(sale);
     }
     //[GET] 상세_판매 상품 조회
+    public SellerSaleResponseDto getSaleByUserId(final Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new NotFoundException(ErrorStatus.NO_EXISTS_USER, ErrorStatus.NO_EXISTS_USER.getMessage())
+        );
+
+        return SellerSaleResponseDto.of(user);
+    }
 
     //[GET] 상세_함께 본 상품 조회
 
