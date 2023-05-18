@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import sopt.org.CarrotServer.domain.sale.Sale;
-import sopt.org.CarrotServer.domain.sale.SaleStatus;
 
 @Getter
 @Builder
@@ -41,8 +40,9 @@ public class SaleResponseDto {
         this.isCheckLike = isCheckLike;
     }
 
+
     public static SaleResponseDto of(Long id, String title, String imgUrl, String location, String time,
-                 Boolean isUpdated, Integer price, Boolean isDiscount, Integer likeCount, Boolean isCheckLike) {
+                                     Boolean isUpdated, Integer price, Boolean isDiscount, Integer likeCount, Boolean isCheckLike) {
         return new SaleResponseDto(id, title, imgUrl, location, time, isUpdated, price, isDiscount, likeCount, isCheckLike);
     }
 

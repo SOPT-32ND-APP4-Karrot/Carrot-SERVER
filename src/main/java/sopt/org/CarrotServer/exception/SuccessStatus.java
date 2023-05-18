@@ -22,17 +22,20 @@ public enum SuccessStatus {
 
     // User 관련
     CREATE_USER_SUCCESS(HttpStatus.CREATED, "유저 생성 성공"),
-    CREATE_SALE_SUCCESS(HttpStatus.CREATED, "상품 생성 성공"),
 
     // Sale 관련
+    CREATE_SALE_SUCCESS(HttpStatus.CREATED, "상품 생성 성공"),
     READ_ALL_SALE_SUCCESS(HttpStatus.OK, "전체 상품 조회 성공"),
-
+    READ_SALE_DETAIL_SUCCESS(HttpStatus.OK, "상품 상세 조회 성공"),
     // Review 관련
     CREATE_REVIEW_SUCCESS(HttpStatus.CREATED, "후기 생성에 성공했습니다."),
     CREATE_REVIEW_CONTENT_SUCCESS(HttpStatus.CREATED, "후기 내용 생성에 성공했습니다."),
-    GET_REVIEW_SUCCESS(HttpStatus.OK, "후기 정보 조회에 성공했습니다.")
+    GET_REVIEW_SUCCESS(HttpStatus.OK, "후기 정보 조회에 성공했습니다."),
 
     ;
+
+
+
 
 
 

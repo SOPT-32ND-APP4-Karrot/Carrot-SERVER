@@ -14,7 +14,6 @@ public interface SaleRepository extends Repository<Sale, Long> {
     // READ
     List<Sale> findAll();
     Optional<Sale> findById(Long id);
-
     // UPDATE
     // DELETE
 }

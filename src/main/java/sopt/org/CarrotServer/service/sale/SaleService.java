@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sopt.org.CarrotServer.controller.sale.dto.request.CreateSaleRequestDto;
+import sopt.org.CarrotServer.controller.sale.dto.response.SaleDetailResponseDto;
 import sopt.org.CarrotServer.controller.sale.dto.response.SaleResponseDto;
 import sopt.org.CarrotServer.domain.sale.Sale;
 import sopt.org.CarrotServer.domain.sale.SaleLikeId;
@@ -80,11 +81,30 @@ public class SaleService {
         return saleList;
     }
 
-//    public List<PostResponseDto> getPostByUserId(final Long userId) {
-//        final List<PostResponseDto> postList = new ArrayList<>();
-//        postRepository.findAllByUserId(userId).forEach((p) ->
-//                postList.add(PostResponseDto.of(p.getId(), p.getTitle(), p.getContent()))
-//        );
-//        return postList;
-//    }
+    //상세_상품 상세 조회
+    public SaleDetailResponseDto getSaleById(final Long saleId) {
+        Sale sale = saleRepository.findById(saleId).orElseThrow(
+                () -> new NotFoundException(ErrorStatus.NO_EXISTS_SALE, ErrorStatus.NO_EXISTS_SALE.getMessage())
+        );
+
+        //TODO 로직이 겹치는데 어떻게 하는게 좋을지?
+        User user = userRepository.findById(sale.getUser().getUserId()).orElseThrow(
+                () -> new NotFoundException(ErrorStatus.NO_EXISTS_USER, ErrorStatus.NO_EXISTS_USER.getMessage())
+        );
+
+        //TODO 좋아요 수 계산을 sale.getSaleLikeList().size() 이렇게 해도 되는지?
+        int likeCount = Math.toIntExact(saleLikeRepository.countBySaleLikeIdSaleId(sale.getSaleId()));
+
+        //임시로 좋아요는 판매자가 눌렀는지 여부로 구현
+        boolean isCheckLike = saleLikeRepository.existsBySaleLikeId(
+                SaleLikeId.builder().saleId(sale.getSaleId()).userId(user.getUserId()).build());
+
+        Long chatRoomId = (long) -1; //채팅방이 존재하지 않는 경우 -1 리턴
+        if (!sale.getChatRoomList().isEmpty()) {
+            //상품의 첫번째 채팅방 아이디로 고정
+            chatRoomId = sale.getChatRoomList().get(0).getChatRoomId();
+        }
+
+        return SaleDetailResponseDto.of(sale, likeCount, isCheckLike, user, chatRoomId);
+    }
 }
