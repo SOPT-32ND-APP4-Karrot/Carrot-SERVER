@@ -64,7 +64,7 @@ public class SaleService {
                     SaleLikeId.builder().saleId(sale.getSaleId()).userId(user.getUserId()).build());
 
             saleList.add(SaleResponseDto.of(
-                    Math.toIntExact(sale.getSaleId()),
+                    sale.getSaleId(),
                     sale.getTitle(),
                     sale.getSaleImgUrl(),
                     user.getLocation(),
