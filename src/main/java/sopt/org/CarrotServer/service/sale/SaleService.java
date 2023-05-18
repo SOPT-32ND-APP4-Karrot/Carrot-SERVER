@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import sopt.org.CarrotServer.controller.sale.dto.request.CreateSaleRequestDto;
 import sopt.org.CarrotServer.controller.sale.dto.response.SaleDetailResponseDto;
 import sopt.org.CarrotServer.controller.sale.dto.response.SaleResponseDto;
+import sopt.org.CarrotServer.controller.sale.dto.response.SaleSimpleResponseDto;
 import sopt.org.CarrotServer.domain.sale.Sale;
 import sopt.org.CarrotServer.domain.sale.SaleLikeId;
 import sopt.org.CarrotServer.domain.sale.SaleStatus;
@@ -107,4 +108,17 @@ public class SaleService {
 
         return SaleDetailResponseDto.of(sale, likeCount, isCheckLike, user, chatRoomId);
     }
+
+    //[GET] 상세_광고 조회
+    public SaleSimpleResponseDto getRandomSale() {
+        Sale sale = saleRepository.findRandomSale().orElseThrow(
+                () -> new NotFoundException(ErrorStatus.NO_EXISTS_SALE, ErrorStatus.NO_EXISTS_SALE.getMessage())
+        );
+
+        return SaleSimpleResponseDto.of(sale);
+    }
+    //[GET] 상세_판매 상품 조회
+
+    //[GET] 상세_함께 본 상품 조회
+
 }

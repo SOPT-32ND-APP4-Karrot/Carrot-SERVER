@@ -6,6 +6,7 @@ import sopt.org.CarrotServer.common.dto.ApiResponse;
 import sopt.org.CarrotServer.controller.sale.dto.request.CreateSaleRequestDto;
 import sopt.org.CarrotServer.controller.sale.dto.response.SaleDetailResponseDto;
 import sopt.org.CarrotServer.controller.sale.dto.response.SaleResponseDto;
+import sopt.org.CarrotServer.controller.sale.dto.response.SaleSimpleResponseDto;
 import sopt.org.CarrotServer.exception.SuccessStatus;
 import sopt.org.CarrotServer.service.sale.SaleService;
 
@@ -35,6 +36,16 @@ public class SaleController {
     public ApiResponse<SaleDetailResponseDto> getSaleById(@PathVariable final Long saleId) {
         return ApiResponse.success(SuccessStatus.READ_SALE_DETAIL_SUCCESS, saleService.getSaleById(saleId));
     }
+
+    //[GET] 상세_광고 조회
+    @GetMapping("/advertisement") //랜덤
+    public ApiResponse<SaleSimpleResponseDto> getRandomSale() {
+        return ApiResponse.success(SuccessStatus.READ_RANDOM_SALE_SUCCESS, saleService.getRandomSale());
+    }
+
+    //[GET] 상세_판매 상품 조회
+
+    //[GET] 상세_함께 본 상품 조회
 
 
 }
