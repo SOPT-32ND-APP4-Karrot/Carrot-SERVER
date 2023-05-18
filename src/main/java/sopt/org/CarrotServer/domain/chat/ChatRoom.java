@@ -50,4 +50,13 @@ public class ChatRoom extends BaseTimeEntity {
         this.writer = user;
         writer.getChatRoomList().add(this);
     }
+
+    public void setSale(Sale sale) {
+        if (this.sale != null) {
+            this.sale.getChatRoomList().remove(this);
+        }
+
+        this.sale = sale;
+        sale.getChatRoomList().add(this);
+    }
 }
