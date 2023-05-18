@@ -1,4 +1,4 @@
-package sopt.org.CarrotServer.controller.review.dto.request;
+package sopt.org.CarrotServer.controller.chat.dto.request;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -6,9 +6,10 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class CreateReviewContentRequestDto {
+public class CreateChatRoomRequestDto {
 
-    private String content;
+    private Long saleId;
 
     private Long userId;
+
 }

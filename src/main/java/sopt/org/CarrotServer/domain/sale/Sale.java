@@ -5,9 +5,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import sopt.org.CarrotServer.domain.BaseTimeEntity;
+import sopt.org.CarrotServer.domain.chat.ChatRoom;
 import sopt.org.CarrotServer.domain.user.User;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "SALE")
@@ -71,6 +74,9 @@ public class Sale extends BaseTimeEntity {
     @JoinColumn(name = "userId", nullable = false, foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
     //JoinColumn은 필드 매핑만 해줌 foreignKey의 ConstraintMode.PROVIDER_DEFAULT는 DB에 따라 제약조건이 안 생길수도 있음
     private User user;
+
+    @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ChatRoom> chatRoomList = new ArrayList<>();
 
     //== 연관관계 메소드 ==//
     public void setUser(User user) {

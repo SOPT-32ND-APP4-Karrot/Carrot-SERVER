@@ -1,6 +1,7 @@
 package sopt.org.CarrotServer.domain.chat;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import sopt.org.CarrotServer.domain.BaseTimeEntity;
@@ -23,7 +24,7 @@ public class ChatMessage extends BaseTimeEntity {
     private String content;
 
     @Column(name = "has_keyword", nullable = false)
-    private boolean hasKeyword;
+    private Boolean hasKeyword;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "chat_room_id")
@@ -47,5 +48,13 @@ public class ChatMessage extends BaseTimeEntity {
 
         this.writer = user;
         writer.getChatMessageList().add(this);
+    }
+
+    @Builder
+    public ChatMessage(String content, Boolean hasKeyword, ChatRoom chatRoom, User writer) {
+        this.content = content;
+        this.hasKeyword = hasKeyword;
+        this.chatRoom = chatRoom;
+        this.writer = writer;
     }
 }

@@ -4,6 +4,7 @@ import org.springframework.data.repository.Repository;
 import sopt.org.CarrotServer.domain.sale.Sale;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SaleRepository extends Repository<Sale, Long> {
 
@@ -12,6 +13,8 @@ public interface SaleRepository extends Repository<Sale, Long> {
 
     // READ
     List<Sale> findAll();
+    Optional<Sale> findById(Long id);
+
     // UPDATE
     // DELETE
 }

@@ -13,6 +13,11 @@ public class CustomException extends RuntimeException {
         this.errorStatus = error;
     }
 
+    public CustomException(ErrorStatus error) {
+        super(error.getMessage());
+        this.errorStatus =error;
+    }
+
     public int getHttpStatus() {
         return errorStatus.getHttpStatusCode();
     }

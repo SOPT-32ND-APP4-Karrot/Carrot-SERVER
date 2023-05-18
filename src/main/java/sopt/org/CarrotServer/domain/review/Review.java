@@ -8,10 +8,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "REVIEW")
-@Builder  // TODO Builder 어노테이션을 메소드로 따로 빼서 구현할지?
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 public class Review extends BaseTimeEntity {
 
     @Id
@@ -36,5 +34,10 @@ public class Review extends BaseTimeEntity {
     public void setReview(ReviewContent reviewContent) {
     }
 
-
+    @Builder
+    public Review(Sale sale, ReviewContent senderReviewContent, ReviewContent receiverReviewContent) {
+        this.sale = sale;
+        this.senderReviewContent = senderReviewContent;
+        this.receiverReviewContent = receiverReviewContent;
+    }
 }

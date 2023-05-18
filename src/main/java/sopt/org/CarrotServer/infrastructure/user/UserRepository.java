@@ -1,5 +1,6 @@
 package sopt.org.CarrotServer.infrastructure.user;
 
+
 import org.springframework.data.repository.Repository;
 import sopt.org.CarrotServer.domain.user.User;
 

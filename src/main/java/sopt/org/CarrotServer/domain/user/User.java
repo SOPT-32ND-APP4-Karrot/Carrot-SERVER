@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import sopt.org.CarrotServer.domain.BaseTimeEntity;
 import sopt.org.CarrotServer.domain.chat.ChatMessage;
+import sopt.org.CarrotServer.domain.chat.ChatRoom;
 import sopt.org.CarrotServer.domain.review.ReviewContent;
 import sopt.org.CarrotServer.domain.sale.Sale;
 
@@ -45,6 +46,9 @@ public class User extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ChatMessage> chatMessageList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ChatRoom> chatRoomList = new ArrayList<>();
 
     @Builder
     public User(String nickname, String phone, Double temperature, String location, String profileImgUrl) {
