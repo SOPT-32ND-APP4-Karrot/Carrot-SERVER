@@ -51,13 +51,12 @@ public class User extends BaseTimeEntity {
     private List<ChatRoom> chatRoomList = new ArrayList<>();
 
     @Builder
-    public User(String nickname, String phone, Double temperature, String location, String profileImgUrl, List<Sale> sales) {
+    public User(String nickname, String phone, Double temperature, String location, String profileImgUrl) {
         this.nickname = nickname;
         this.phone = phone;
         this.temperature = temperature;
         this.location = location;
         this.profileImgUrl = profileImgUrl;
-        this.sales.addAll(sales);
     }
 
     //판매한 상품

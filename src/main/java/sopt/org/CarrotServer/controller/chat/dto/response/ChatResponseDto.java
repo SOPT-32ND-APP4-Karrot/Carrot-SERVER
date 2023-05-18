@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import sopt.org.CarrotServer.controller.sale.dto.response.SaleChatRoomResponseDto;
 import sopt.org.CarrotServer.controller.sale.dto.response.SaleResponseDto;
 import sopt.org.CarrotServer.controller.user.dto.response.UserResponseDto;
 import sopt.org.CarrotServer.domain.chat.ChatRoom;
@@ -21,7 +22,7 @@ public class ChatResponseDto {
 
     private List<ChatMessageResponseDto> chatMessageList;
 
-    private SaleResponseDto sale;
+    private SaleChatRoomResponseDto sale;
 
     private UserResponseDto seller;
 
@@ -31,7 +32,7 @@ public class ChatResponseDto {
         return new ChatResponseDto(
                 chatRoom.getChatRoomId(),
                 chatMessageList,
-                SaleResponseDto.of(sale),
+                SaleChatRoomResponseDto.of(sale),
                 UserResponseDto.of(user),
                 reviewId
         );

@@ -1,10 +1,31 @@
 package sopt.org.CarrotServer.controller.sale.dto.response;
 
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import sopt.org.CarrotServer.domain.sale.Sale;
+import sopt.org.CarrotServer.domain.sale.SaleStatus;
 
+@Getter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class SaleResponseDto {
+    private Integer id;
+    private String title;
+    private String imgUrl;
+    private String location;
+    private String time;
+    private Boolean isUpdated;
+    private Integer price;
+    private Boolean isDiscount;
+    private Integer likeCount;
+    private Boolean isCheckLike;
 
-    public static SaleResponseDto of(Sale sale) {
-        return new SaleResponseDto();
+
+
+    public static SaleResponseDto of(Integer id, String title, String imgUrl, String location, String time,
+                                     Boolean isUpdated, Integer price, Boolean isDiscount, Integer likeCount, Boolean isCheckLike) {
+        return new SaleResponseDto(id, title, imgUrl, location, time, isUpdated, price, isDiscount, likeCount, isCheckLike);
     }
+
 }
