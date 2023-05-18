@@ -27,7 +27,8 @@ public enum SuccessStatus {
     CREATE_SALE_SUCCESS(HttpStatus.CREATED, "상품 생성 성공"),
     READ_ALL_SALE_SUCCESS(HttpStatus.OK, "전체 상품 조회 성공"),
     READ_SALE_DETAIL_SUCCESS(HttpStatus.OK, "상품 상세 조회 성공"),
-    READ_RANDOM_SALE_SUCCESS(HttpStatus.OK, "광고 조회 성공");
+    READ_RANDOM_SALE_SUCCESS(HttpStatus.OK, "광고 조회 성공"),
+    READ_SELLER_SALE_SUCCESS(HttpStatus.OK, "판매 상품 조회 성공");
 
 
     private final HttpStatus httpStatus;
