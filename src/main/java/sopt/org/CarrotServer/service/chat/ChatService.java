@@ -89,6 +89,11 @@ public class ChatService {
         return ChatMessageResponseDto.of(chatMessage);
     }
 
+    /**
+     * 채팅방 생성하기
+     * @param request
+     * @return
+     */
     @Transactional
     public ChatRoomRepsonseDto createChatRoom(CreateChatRoomRequestDto request) {
 

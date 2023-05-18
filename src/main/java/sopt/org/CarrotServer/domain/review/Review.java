@@ -29,15 +29,19 @@ public class Review extends BaseTimeEntity {
     @JoinColumn(name = "receiver_review_content_id")
     private ReviewContent receiverReviewContent;
 
-    //== 연관관계 메소드 ==//
-    // TODO User에 판매자 여부 구분 필드 넣어서 sender 인지 receiver 인지 여기서 set으로 지정
-    public void setReview(ReviewContent reviewContent) {
-    }
 
     @Builder
     public Review(Sale sale, ReviewContent senderReviewContent, ReviewContent receiverReviewContent) {
         this.sale = sale;
         this.senderReviewContent = senderReviewContent;
         this.receiverReviewContent = receiverReviewContent;
+    }
+
+    //== 연관관계 메소드 ==//
+    public void setSenderReviewContent(ReviewContent reviewContent) {
+        this.senderReviewContent = reviewContent;
+    }
+    public void setReceiverReviewContent(ReviewContent reviewContent) {
+        this.receiverReviewContent = reviewContent;
     }
 }
