@@ -7,6 +7,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
@@ -25,14 +26,14 @@ public abstract class BaseTimeEntity {
 
     @PrePersist
     public void onPrePersist() {
-        this.createdAt = LocalDate.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
-        this.modifiedAt = LocalDate.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
+        this.createdAt = LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
+        this.modifiedAt = LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
 
     }
 
     @PreUpdate
     public void onPreUpdate() {
-        this.modifiedAt = LocalDate.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
+        this.modifiedAt = LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
     }
 
 }

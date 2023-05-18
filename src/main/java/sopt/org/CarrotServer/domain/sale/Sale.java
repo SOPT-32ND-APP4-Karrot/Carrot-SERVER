@@ -14,7 +14,9 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Sale extends BaseTimeEntity {
+
     @Id
+    @Column(name = "sale_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long saleId;
 

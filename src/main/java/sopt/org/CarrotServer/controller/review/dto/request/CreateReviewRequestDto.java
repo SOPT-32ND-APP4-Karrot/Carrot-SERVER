@@ -6,9 +6,9 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class ReviewRequestDto {
+public class CreateReviewRequestDto {
 
-    private Long senderReviewContentId;
-
+    private Long userId;
     private Long receiverReviewContentId;
+    private Long senderReviewContentId;
 }

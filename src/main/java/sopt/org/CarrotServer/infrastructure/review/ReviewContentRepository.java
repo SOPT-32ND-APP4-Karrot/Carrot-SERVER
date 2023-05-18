@@ -1,4 +1,7 @@
 package sopt.org.CarrotServer.infrastructure.review;
 
-public interface ReviewContentRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import sopt.org.CarrotServer.domain.review.ReviewContent;
+
+public interface ReviewContentRepository extends JpaRepository<ReviewContent, Long> {
 }
