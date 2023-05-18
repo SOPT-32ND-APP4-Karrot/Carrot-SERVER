@@ -43,4 +43,8 @@ public class SaleLike extends BaseTimeEntity {
         this.sale = sale;
         sale.getSaleLikeList().add(this);
     }
+
+    public void deleteSale(Sale sale) {
+        this.sale.getSaleLikeList().remove(this);
+    }
 }
