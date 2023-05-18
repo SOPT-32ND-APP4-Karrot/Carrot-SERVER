@@ -25,6 +25,8 @@ public interface SaleRepository extends Repository<Sale, Long> {
         return Optional.ofNullable(sales.get(new Random().nextInt(sales.size())));
     }
 
+    List<Sale> findTop6ByCategoryAndSaleIdNot(String Category, Long id);
+
     // UPDATE
     // DELETE
 }

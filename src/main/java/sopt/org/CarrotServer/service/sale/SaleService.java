@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sopt.org.CarrotServer.controller.sale.dto.request.CreateSaleRequestDto;
-import sopt.org.CarrotServer.controller.sale.dto.response.SaleDetailResponseDto;
-import sopt.org.CarrotServer.controller.sale.dto.response.SaleResponseDto;
-import sopt.org.CarrotServer.controller.sale.dto.response.SaleSimpleResponseDto;
-import sopt.org.CarrotServer.controller.sale.dto.response.SellerSaleResponseDto;
+import sopt.org.CarrotServer.controller.sale.dto.response.*;
 import sopt.org.CarrotServer.domain.sale.Sale;
 import sopt.org.CarrotServer.domain.sale.SaleLikeId;
 import sopt.org.CarrotServer.domain.sale.SaleStatus;
@@ -20,6 +17,7 @@ import sopt.org.CarrotServer.infrastructure.user.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -128,5 +126,14 @@ public class SaleService {
     }
 
     //[GET] 상세_함께 본 상품 조회
+    public List<SaleInfoDto> getSaleByCategory(final Long saleId) {
+        Sale sale = saleRepository.findById(saleId).orElseThrow(
+                () -> new NotFoundException(ErrorStatus.NO_EXISTS_SALE, ErrorStatus.NO_EXISTS_SALE.getMessage())
+        );
+
+        String category = sale.getCategory();
+
+        return saleRepository.findTop6ByCategoryAndSaleIdNot(category, saleId).stream().map(SaleInfoDto::of).collect(Collectors.toList());
+    }
 
 }
