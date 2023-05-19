@@ -1,6 +1,7 @@
 package sopt.org.CarrotServer.service.review;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sopt.org.CarrotServer.controller.review.dto.request.CreateReviewContentRequestDto;
@@ -13,8 +14,12 @@ import sopt.org.CarrotServer.exception.model.NotFoundException;
 import sopt.org.CarrotServer.infrastructure.review.ReviewContentRepository;
 import sopt.org.CarrotServer.infrastructure.user.UserRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ReviewContentService {
 
     private final ReviewContentRepository reviewContentRepository;
@@ -31,10 +36,20 @@ public class ReviewContentService {
                 () -> new NotFoundException(ErrorStatus.NO_EXISTS_USER)
         );
 
+        List<ReviewCategory> reviewCategoryList = new ArrayList<>();
+        log.info("reviewCategoryList 생성 전! " + reviewCategoryList.size());
+        log.info("reviewcontent 생성 시 받아온 String list: " + request.getContent());
+        for (String reviewContent : request.getContent()) {
+            reviewCategoryList.add(ReviewCategory.nameOf(reviewContent));
+        }
+        log.info("reviewCategoryList 생성! " + reviewCategoryList.size());
+
         ReviewContent reviewContent = ReviewContent.builder()
-                .content(ReviewCategory.nameOf(request.getContent()))
+                .content(reviewCategoryList)
                 .writer(writer)
                 .build();
+        log.info("reviewContent.getContent(): " + reviewContent.getContent());
+        reviewContent.getContent().addAll(reviewCategoryList);
         reviewContentRepository.save(reviewContent);
 
         reviewContent.setWriter(writer);
