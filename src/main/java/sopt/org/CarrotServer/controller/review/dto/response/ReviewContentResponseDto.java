@@ -21,6 +21,6 @@ public class ReviewContentResponseDto {
         return new ReviewContentResponseDto(
                 reviewContent.getReviewContentId(),
                 reviewContent.getContent().getName(),
-                UserResponseDto.of(reviewContent.getWriter()));
+                UserResponseDto.of(reviewContent.getWriter().getUserId(), reviewContent.getWriter().getNickname()));
     }
 }

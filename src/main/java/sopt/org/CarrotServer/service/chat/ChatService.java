@@ -108,11 +108,11 @@ public class ChatService {
                 () -> new NotFoundException(ErrorStatus.NO_EXISTS_SALE)
         );
 
-        reviewService.createReview(CreateReviewRequestDto.builder()
+        /*reviewService.createReview(CreateReviewRequestDto.builder()
                         .userId(request.getUserId())
                         .receiverReviewContentId(request.getReceiverReviewContentId())
                         .senderReviewContentId(request.getSenderReviewContentId())
-                        .build());
+                        .build());*/
 
         ChatRoom chatRoom = ChatRoom.builder()
                 .writer(writer)

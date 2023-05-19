@@ -48,7 +48,10 @@ public class SaleService {
     //상품 생성
     @Transactional
     public Long createSale(final CreateSaleRequestDto request) {
-        User user = userRepository.findById(Long.valueOf(request.getUserId())).orElseThrow();
+        log.info("userId: " +request.getUserId());
+        User user = userRepository.findById(request.getUserId()).orElseThrow(
+                () -> new NotFoundException(ErrorStatus.NO_EXISTS_USER)
+        );
 
         String saleImgUrl;
         try{

@@ -18,6 +18,6 @@ public class CreateSaleRequestDto {
     private Boolean isSuggest;
     private String status;
     private Boolean isDiscount;
-    private Integer userId;
+    private Long userId;
     private MultipartFile saleImgUrl;
 }

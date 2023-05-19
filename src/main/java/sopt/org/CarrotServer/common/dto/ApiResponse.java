@@ -12,7 +12,7 @@ import sopt.org.CarrotServer.exception.SuccessStatus;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ApiResponse<T> {
 
-    private final int code;
+    private final int status;
     private final String message;
     private T data;
 

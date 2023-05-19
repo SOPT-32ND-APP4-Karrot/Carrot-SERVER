@@ -30,4 +30,11 @@ public class UserResponseDto {
                 .phone(user.getPhone())
                 .build();
     }
+
+    public static UserResponseDto of(Long userId, String nickname) {
+        return UserResponseDto.builder()
+                .userId(userId)
+                .nickname(nickname)
+                .build();
+    }
 }
