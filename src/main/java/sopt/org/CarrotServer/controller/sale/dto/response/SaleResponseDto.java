@@ -58,27 +58,4 @@ public class SaleResponseDto {
                 .build();
     }
 
-    /* public static SaleResponseDto of(Sale sale, String location, Integer likeCount, Boolean isCheckLike) {
-        String time = sale.getCreatedAt();
-        if (sale.getIsUpdated()) {
-            time = sale.getModifiedAt();
-        }
-
-        return SaleResponseDto.builder()
-                .id(sale.getSaleId())
-                .title(sale.getTitle())
-                .imgUrl(sale.getSaleImgUrl())
-                .location(location)
-                .time(time)
-                .isUpdated(sale.getIsUpdated())
-                .price(sale.getPrice())
-                .isDiscount(sale.getIsDiscount())
-                .likeCount(likeCount)
-                .isCheckLike(isCheckLike)
-                .status(sale.getStatus().getStatus())
-                .isSuggest(sale.getIsSuggest())
-                .status(sale.getStatus().getStatus())
-                .build();
-    }*/
-
 }

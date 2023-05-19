@@ -26,7 +26,7 @@ public class SaleDetailDto {
                 sale.getSaleImgUrl(),
                 sale.getTitle(),
                 sale.getCategory(),
-                sale.getIsUpdated() ? sale.getModifiedAt() : sale.getCreatedAt(),
+                sale.getIsUpdated() ? sale.getUpdatedAt() : sale.getCreatedAt(),
                 sale.getIsUpdated(),
                 likeCount,
                 sale.getView(),

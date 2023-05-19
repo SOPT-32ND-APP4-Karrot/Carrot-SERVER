@@ -22,18 +22,18 @@ public abstract class BaseTimeEntity {
 
     @Column(name = "updated_at")
     @LastModifiedDate  // 조회한 Entity 의 값을 변경할 때 최종 수정 시간이 자동 저장된다.
-    private String modifiedAt;
+    private String updatedAt;
 
     @PrePersist
     public void onPrePersist() {
         this.createdAt = LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
-        this.modifiedAt = LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
+        this.updatedAt = LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
 
     }
 
     @PreUpdate
     public void onPreUpdate() {
-        this.modifiedAt = LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
+        this.updatedAt = LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
     }
 
 }

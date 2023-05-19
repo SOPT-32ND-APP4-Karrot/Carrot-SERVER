@@ -19,7 +19,12 @@ public class SaleLikeResponseDto {
 
     private Integer likeCount;
 
+    public void setLikeCount(Integer likeCount) {
+        this.likeCount = likeCount;
+    }
+
     public static SaleLikeResponseDto of(SaleLike saleLike, boolean isCheckLike) {
+
         return SaleLikeResponseDto.builder()
                 .saleId(saleLike.getSale().getSaleId())
                 .isCheckLike(isCheckLike)

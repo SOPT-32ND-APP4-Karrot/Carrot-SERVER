@@ -3,10 +3,8 @@ package sopt.org.CarrotServer.controller.sale.dto.response;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import sopt.org.CarrotServer.domain.sale.Sale;
 import sopt.org.CarrotServer.domain.user.User;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
