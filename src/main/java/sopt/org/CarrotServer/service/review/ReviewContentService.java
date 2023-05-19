@@ -49,8 +49,7 @@ public class ReviewContentService {
                 .writer(writer)
                 .build();
         log.info("reviewContent.getContent(): " + reviewContent.getContent());
-        reviewContent.getContent().addAll(reviewCategoryList);
-        reviewContentRepository.save(reviewContent);
+d .        reviewContentRepository.save(reviewContent);
 
         reviewContent.setWriter(writer);
 
