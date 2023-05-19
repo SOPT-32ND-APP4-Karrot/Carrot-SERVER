@@ -33,7 +33,9 @@ public enum ErrorStatus {
 
     FAILED_TO_GET_CHATROOM(HttpStatus.INTERNAL_SERVER_ERROR, "데이터베이스에서 채팅방을 찾는 데 실패했습니다."),
     FAILED_TO_GET_SALE(HttpStatus.INTERNAL_SERVER_ERROR, "데이터베이스에서 상품을 찾는 데 실패했습니다."),
-    FAILED_TO_GET_REVIEW(HttpStatus.INTERNAL_SERVER_ERROR, "데이터베이스에서 리뷰를 찾는 데 실패했습니다.");
+    FAILED_TO_GET_REVIEW(HttpStatus.INTERNAL_SERVER_ERROR, "데이터베이스에서 리뷰를 찾는 데 실패했습니다."),
+    FAILED_TO_GET_SALE_LIKE(HttpStatus.INTERNAL_SERVER_ERROR, "데이터베이스에서 좋아요를 찾는 데 실패했습니다."),
+    FAILED_TO_CREATE_SALE_LIKE(HttpStatus.INTERNAL_SERVER_ERROR, "좋아요 생성을 위한 유저, 상품 조회에 실패했습니다.");
 
     private final HttpStatus httpStatus;
     private final String message;

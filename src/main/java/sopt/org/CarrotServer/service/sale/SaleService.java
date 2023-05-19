@@ -4,17 +4,22 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import sopt.org.CarrotServer.controller.sale.dto.request.CreateSaleRequestDto;
 import sopt.org.CarrotServer.controller.sale.dto.request.SaleRequestDto;
+import sopt.org.CarrotServer.controller.sale.dto.request.SaleLikeRequestDto;
 import sopt.org.CarrotServer.controller.sale.dto.response.*;
 import sopt.org.CarrotServer.domain.sale.Sale;
+import sopt.org.CarrotServer.domain.sale.SaleLike;
 import sopt.org.CarrotServer.domain.sale.SaleLikeId;
 import sopt.org.CarrotServer.domain.sale.SaleStatus;
 import sopt.org.CarrotServer.domain.user.User;
 import sopt.org.CarrotServer.exception.ErrorStatus;
+import sopt.org.CarrotServer.exception.model.CustomException;
 import sopt.org.CarrotServer.exception.model.NotFoundException;
 import sopt.org.CarrotServer.infrastructure.sale.SaleLikeRepository;
 import sopt.org.CarrotServer.infrastructure.sale.SaleRepository;
@@ -28,6 +33,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class SaleService {
 
@@ -145,6 +151,7 @@ public class SaleService {
 
         return SaleSimpleResponseDto.of(sale);
     }
+
     //[GET] 상세_판매 상품 조회
     public SellerSaleResponseDto getSaleByUserId(final Long userId) {
         User user = userRepository.findById(userId).orElseThrow(
@@ -164,5 +171,66 @@ public class SaleService {
 
         return saleRepository.findTop6ByCategoryAndSaleIdNot(category, saleId).stream().map(SaleInfoDto::of).collect(Collectors.toList());
     }
+
+    // 상품 좋아요 체크
+    @Transactional
+    public SaleLikeResponseDto likeSale(SaleLikeRequestDto request) {
+
+        User user = userRepository.findById(request.getUserId()).orElseThrow(
+                () -> new CustomException(ErrorStatus.NO_EXISTS_USER)
+        );
+
+        Sale sale = saleRepository.findById(request.getSaleId()).orElseThrow(
+                () -> new CustomException(ErrorStatus.NO_EXISTS_SALE)
+        );
+
+        log.info("user정보: " + user.getUserId() + ", sale정보: " + sale.getSaleId());
+
+        try {
+            SaleLikeId saleLikeId = SaleLikeId.builder()
+                    .saleId(sale.getSaleId())
+                    .userId(user.getUserId())
+                    .build();
+
+            SaleLike saleLike = SaleLike.builder()
+                    .saleLikeId(saleLikeId)
+                    .sale(sale)
+                    .user(user)
+                    .build();
+//            saleLike.setSale(sale);
+            log.info("saleLike 인스턴스 생성 후 " + saleLike.getCreatedAt());
+
+            saleLikeRepository.save(saleLike);
+            return SaleLikeResponseDto.of(saleLike, true);
+
+        } catch (NullPointerException e) {
+            throw new CustomException(ErrorStatus.FAILED_TO_CREATE_SALE_LIKE);
+        } catch (Exception e) {
+            throw new CustomException(ErrorStatus.FAILED_TO_CREATE_SALE_LIKE);
+        }
+
+
+    }
+
+    // 상품 좋아요 취소
+    public SaleLikeResponseDto dislikeSale(SaleLikeRequestDto request) {
+
+        SaleLike saleLike = saleLikeRepository.findBySaleLikeId(SaleLikeId.builder()
+                .saleId(request.getSaleId())
+                .userId(request.getUserId())
+                .build()).orElseThrow(
+                () -> new CustomException(ErrorStatus.FAILED_TO_GET_SALE_LIKE)
+        );
+
+        Sale sale = saleRepository.findById(request.getSaleId()).orElseThrow(
+                () -> new CustomException(ErrorStatus.NO_EXISTS_SALE)
+        );
+        saleLike.deleteSale(sale);
+
+        saleLikeRepository.delete(saleLike);
+        return SaleLikeResponseDto.of(saleLike, false);
+    }
+
+
 
 }
