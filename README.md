@@ -22,7 +22,7 @@
 | Java version | Java 11  |
 | 패키지 구조 | 도메인 패키지 구조 |
 
-
+<br/><br/>
 
 ### 프로젝트 폴더 구조
 
@@ -140,6 +140,8 @@
     ```
 </div>
 </details>
+<br/><br/>
+
 
 ### API 명세서
 
@@ -149,6 +151,7 @@
 ![img_1.png](img_1.png)
 
 [📓 DB 설계](https://www.notion.so/DB-cc20d8bf635749d6a0238e1e4c7e878d)
+<br/><br/>
 
 # 👥 Backend Convention
 
@@ -164,6 +167,7 @@
 ### 브랜치 명 예시
 
 `ex) feature/#issue-user-APi`
+<br/><br/>
 
 ## 커밋 컨벤션
 
@@ -181,6 +185,8 @@
 ### 커밋 예시
 
 `ex ) git commit -m "[FEAT] 회원가입 기능 완료"`
+<br/><br/>
+
 
 ## 이슈 컨벤션
 
@@ -190,6 +196,8 @@
 - [refactor] : 코드 리펙토링 (기능 변경 없이 코드만 수정할 때)
 - [modify] : 코드 수정 (기능의 변화가 있을 때)
 - [chore] : gradle 세팅, 위의 것 이외에 거의 모든 것
+
+<br/><br/>
 
 ## 코드 컨벤션
 
