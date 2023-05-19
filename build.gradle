@@ -32,6 +32,8 @@ dependencies {
 	implementation 'mysql:mysql-connector-java:8.0.32'
 	// Validation
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	//S3
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 }
 
 tasks.named('test') {

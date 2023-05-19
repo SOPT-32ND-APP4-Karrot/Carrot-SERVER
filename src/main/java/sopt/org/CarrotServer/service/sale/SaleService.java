@@ -1,9 +1,14 @@
 package sopt.org.CarrotServer.service.sale;
 
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import sopt.org.CarrotServer.controller.sale.dto.request.CreateSaleRequestDto;
 import sopt.org.CarrotServer.controller.sale.dto.request.SaleLikeRequestDto;
 import sopt.org.CarrotServer.controller.sale.dto.response.*;
@@ -20,8 +25,10 @@ import sopt.org.CarrotServer.infrastructure.sale.SaleRepository;
 import sopt.org.CarrotServer.infrastructure.user.UserRepository;
 import sopt.org.CarrotServer.service.user.UserService;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,17 +40,38 @@ public class SaleService {
     private final SaleLikeRepository saleLikeRepository;
     private final SaleRepository saleRepository;
     private final UserService userService;
+    private final AmazonS3Client amazonS3Client;
+
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
 
     //상품 생성
     @Transactional
-    public Long createSale(CreateSaleRequestDto request) {
+    public Long createSale(final CreateSaleRequestDto request) {
         User user = userRepository.findById(Long.valueOf(request.getUserId())).orElseThrow();
+
+        String saleImgUrl;
+        try{
+            MultipartFile multipartFile = request.getSaleImgUrl();
+            //랜덤 파일명 생성
+            String fileName = UUID.randomUUID() + "-" + multipartFile.getOriginalFilename();
+            //파일 사이즈 설정
+            ObjectMetadata objMeta = new ObjectMetadata();
+            objMeta.setContentLength(multipartFile.getInputStream().available());
+            //s3에 파일 업로드
+            amazonS3Client.putObject(bucket, fileName, multipartFile.getInputStream(), objMeta);
+
+            saleImgUrl = amazonS3Client.getUrl(bucket, fileName).toString();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         Sale sale = Sale.builder()
                 .category(request.getCategory())
                 .view(request.getView())
                 .title(request.getTitle())
                 .description(request.getDescription())
-                .saleImgUrl(request.getSaleImgUrl())
+                .saleImgUrl(saleImgUrl)
                 .isUpdated(request.getIsUpdated())
                 .price(request.getPrice())
                 .isSuggest(request.getIsSuggest())
