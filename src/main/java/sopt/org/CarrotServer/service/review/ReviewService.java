@@ -7,9 +7,8 @@ import sopt.org.CarrotServer.controller.review.dto.request.CreateReviewRequestDt
 import sopt.org.CarrotServer.controller.review.dto.response.ReviewResponseDto;
 import sopt.org.CarrotServer.domain.review.Review;
 import sopt.org.CarrotServer.domain.review.ReviewContent;
-import sopt.org.CarrotServer.exception.ErrorStatus;
-import sopt.org.CarrotServer.exception.model.CustomException;
-import sopt.org.CarrotServer.infrastructure.review.ReviewContentRepository;
+
+import sopt.org.CarrotServer.exception.model.NotFoundException;
 import sopt.org.CarrotServer.infrastructure.review.ReviewRepository;
 
 import static sopt.org.CarrotServer.exception.ErrorStatus.NO_EXISTS_REVIEW;
@@ -53,7 +52,7 @@ public class ReviewService {
     public ReviewResponseDto getReviewById(Long reviewId) {
 
         Review review = reviewRepository.findById(reviewId).orElseThrow(
-                () -> new CustomException(NO_EXISTS_REVIEW)
+                () -> new NotFoundException(NO_EXISTS_REVIEW)
         );
 
         return ReviewResponseDto.of(review);

@@ -8,16 +8,18 @@ import sopt.org.CarrotServer.controller.chat.dto.request.CreateChatRoomRequestDt
 import sopt.org.CarrotServer.controller.chat.dto.response.ChatMessageResponseDto;
 import sopt.org.CarrotServer.controller.chat.dto.response.ChatResponseDto;
 import sopt.org.CarrotServer.controller.chat.dto.response.ChatRoomRepsonseDto;
+import sopt.org.CarrotServer.controller.review.dto.request.CreateReviewRequestDto;
 import sopt.org.CarrotServer.domain.chat.ChatMessage;
 import sopt.org.CarrotServer.domain.chat.ChatRoom;
 import sopt.org.CarrotServer.domain.sale.Sale;
 import sopt.org.CarrotServer.domain.user.User;
 import sopt.org.CarrotServer.exception.ErrorStatus;
-import sopt.org.CarrotServer.exception.model.CustomException;
+import sopt.org.CarrotServer.exception.model.NotFoundException;
 import sopt.org.CarrotServer.infrastructure.chat.ChatMessageRepository;
 import sopt.org.CarrotServer.infrastructure.chat.ChatRoomRepository;
 import sopt.org.CarrotServer.infrastructure.sale.SaleRepository;
 import sopt.org.CarrotServer.infrastructure.user.UserRepository;
+import sopt.org.CarrotServer.service.review.ReviewService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,6 +32,7 @@ public class ChatService {
     private final ChatMessageRepository chatMessageRepository;
     private final UserRepository userRepository;
     private final SaleRepository saleRepository;
+    private final ReviewService reviewService;
 
     /**
      * 채팅방 정보 조회하기 (채팅 메시지 리스트 포함)
@@ -56,7 +59,7 @@ public class ChatService {
      */
     public ChatRoom getChatRoom(Long chatRoomId) {
         return chatRoomRepository.findById(chatRoomId).orElseThrow(
-                () -> new CustomException(ErrorStatus.NO_EXISTS_CHATROOM)
+                () -> new NotFoundException(ErrorStatus.NO_EXISTS_CHATROOM)
         );
     }
 
@@ -69,11 +72,11 @@ public class ChatService {
     public ChatMessageResponseDto createChatMessage(CreateChatMessageRequestDto request) {
 
         User writer = userRepository.findById(request.getUserId()).orElseThrow(
-                () -> new CustomException(ErrorStatus.NO_EXISTS_USER)
+                () -> new NotFoundException(ErrorStatus.NO_EXISTS_USER)
         );
 
         ChatRoom chatRoom = chatRoomRepository.findById(request.getChatRoomId()).orElseThrow(
-                () -> new CustomException(ErrorStatus.NO_EXISTS_CHATROOM)
+                () -> new NotFoundException(ErrorStatus.NO_EXISTS_CHATROOM)
         );
 
         ChatMessage chatMessage = ChatMessage.builder()
@@ -98,12 +101,18 @@ public class ChatService {
     public ChatRoomRepsonseDto createChatRoom(CreateChatRoomRequestDto request) {
 
         User writer = userRepository.findById(request.getUserId()).orElseThrow(
-                () -> new CustomException(ErrorStatus.NO_EXISTS_USER)
+                () -> new NotFoundException(ErrorStatus.NO_EXISTS_USER)
         );
 
         Sale sale = saleRepository.findById(request.getSaleId()).orElseThrow(
-                () -> new CustomException(ErrorStatus.NO_EXISTS_SALE)
+                () -> new NotFoundException(ErrorStatus.NO_EXISTS_SALE)
         );
+
+        reviewService.createReview(CreateReviewRequestDto.builder()
+                        .userId(request.getUserId())
+                        .receiverReviewContentId(request.getReceiverReviewContentId())
+                        .senderReviewContentId(request.getSenderReviewContentId())
+                        .build());
 
         ChatRoom chatRoom = ChatRoom.builder()
                 .writer(writer)

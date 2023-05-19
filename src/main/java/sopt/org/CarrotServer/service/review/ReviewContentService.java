@@ -9,11 +9,9 @@ import sopt.org.CarrotServer.domain.review.ReviewCategory;
 import sopt.org.CarrotServer.domain.review.ReviewContent;
 import sopt.org.CarrotServer.domain.user.User;
 import sopt.org.CarrotServer.exception.ErrorStatus;
-import sopt.org.CarrotServer.exception.model.CustomException;
+import sopt.org.CarrotServer.exception.model.NotFoundException;
 import sopt.org.CarrotServer.infrastructure.review.ReviewContentRepository;
 import sopt.org.CarrotServer.infrastructure.user.UserRepository;
-
-import static sopt.org.CarrotServer.exception.ErrorStatus.NO_EXISTS_REVIEW;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +28,7 @@ public class ReviewContentService {
     @Transactional
     public ReviewContentResponseDto createReviewContent(CreateReviewContentRequestDto request) {
         User writer = userRepository.findById(request.getUserId()).orElseThrow(
-                () -> new CustomException(ErrorStatus.NO_EXISTS_USER)
+                () -> new NotFoundException(ErrorStatus.NO_EXISTS_USER)
         );
 
         ReviewContent reviewContent = ReviewContent.builder()
@@ -52,7 +50,7 @@ public class ReviewContentService {
      */
     public ReviewContent findReviewContent(Long reviewContentId) {
         return reviewContentRepository.findById(reviewContentId).orElseThrow(
-                () -> new CustomException(NO_EXISTS_REVIEW)
+                () -> new NotFoundException(ErrorStatus.NO_EXISTS_REVIEW)
         );
     }
 }

@@ -149,7 +149,7 @@ public class SaleService {
         );
 
         Sale sale = saleRepository.findById(request.getSaleId()).orElseThrow(
-                () -> new CustomException(ErrorStatus.NO_EXISTS_SALE)
+                () -> new NotFoundException(ErrorStatus.NO_EXISTS_SALE)
         );
 
         log.info("user정보: " + user.getUserId() + ", sale정보: " + sale.getSaleId());
@@ -191,7 +191,7 @@ public class SaleService {
         );
 
         Sale sale = saleRepository.findById(request.getSaleId()).orElseThrow(
-                () -> new CustomException(ErrorStatus.NO_EXISTS_SALE)
+                () -> new NotFoundException(ErrorStatus.NO_EXISTS_SALE)
         );
 
         saleLikeRepository.delete(saleLike);
