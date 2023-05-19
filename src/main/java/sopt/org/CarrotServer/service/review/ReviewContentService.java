@@ -49,7 +49,7 @@ public class ReviewContentService {
                 .writer(writer)
                 .build();
         log.info("reviewContent.getContent(): " + reviewContent.getContent());
-d .        reviewContentRepository.save(reviewContent);
+        reviewContentRepository.save(reviewContent);
 
         reviewContent.setWriter(writer);
 
