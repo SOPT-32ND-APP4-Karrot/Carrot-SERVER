@@ -2,6 +2,7 @@ package sopt.org.CarrotServer.controller.sale;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import sopt.org.CarrotServer.common.dto.ApiResponse;
 import sopt.org.CarrotServer.controller.sale.dto.request.CreateSaleRequestDto;
 
@@ -26,7 +27,7 @@ public class SaleController {
 
     //상품 생성
     @PostMapping("")
-    public ApiResponse<Long> createSale(@RequestBody final CreateSaleRequestDto request) {
+    public ApiResponse<Long> createSale(@ModelAttribute final CreateSaleRequestDto request) {
         return ApiResponse.success(SuccessStatus.CREATE_SALE_SUCCESS, saleService.createSale(request));
     }
 
