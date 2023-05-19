@@ -29,6 +29,9 @@ public enum SuccessStatus {
     READ_SALE_DETAIL_SUCCESS(HttpStatus.OK, "상품 상세 조회 성공"),
     READ_RANDOM_SALE_SUCCESS(HttpStatus.OK, "광고 조회 성공"),
 
+    READ_SELLER_SALE_SUCCESS(HttpStatus.OK, "판매 상품 조회 성공"),
+    READ_RECOMMENDATION_SALE_SUCCESS(HttpStatus.OK, "함께 본 상품 조회 성공"),
+
     // Review 관련
     CREATE_REVIEW_SUCCESS(HttpStatus.CREATED, "후기 생성에 성공했습니다."),
     CREATE_REVIEW_CONTENT_SUCCESS(HttpStatus.CREATED, "후기 내용 생성에 성공했습니다."),

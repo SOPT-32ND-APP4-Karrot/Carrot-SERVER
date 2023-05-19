@@ -6,10 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sopt.org.CarrotServer.controller.sale.dto.request.CreateSaleRequestDto;
 import sopt.org.CarrotServer.controller.sale.dto.request.SaleLikeRequestDto;
-import sopt.org.CarrotServer.controller.sale.dto.response.SaleDetailResponseDto;
-import sopt.org.CarrotServer.controller.sale.dto.response.SaleLikeResponseDto;
-import sopt.org.CarrotServer.controller.sale.dto.response.SaleResponseDto;
-import sopt.org.CarrotServer.controller.sale.dto.response.SaleSimpleResponseDto;
+import sopt.org.CarrotServer.controller.sale.dto.response.*;
 import sopt.org.CarrotServer.domain.sale.Sale;
 import sopt.org.CarrotServer.domain.sale.SaleLike;
 import sopt.org.CarrotServer.domain.sale.SaleLikeId;
@@ -24,6 +21,7 @@ import sopt.org.CarrotServer.infrastructure.user.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -123,10 +121,26 @@ public class SaleService {
 
         return SaleSimpleResponseDto.of(sale);
     }
+
     //[GET] 상세_판매 상품 조회
+    public SellerSaleResponseDto getSaleByUserId(final Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new NotFoundException(ErrorStatus.NO_EXISTS_USER, ErrorStatus.NO_EXISTS_USER.getMessage())
+        );
+
+        return SellerSaleResponseDto.of(user);
+    }
 
     //[GET] 상세_함께 본 상품 조회
+    public List<SaleInfoDto> getSaleByCategory(final Long saleId) {
+        Sale sale = saleRepository.findById(saleId).orElseThrow(
+                () -> new NotFoundException(ErrorStatus.NO_EXISTS_SALE, ErrorStatus.NO_EXISTS_SALE.getMessage())
+        );
 
+        String category = sale.getCategory();
+
+        return saleRepository.findTop6ByCategoryAndSaleIdNot(category, saleId).stream().map(SaleInfoDto::of).collect(Collectors.toList());
+    }
 
     // 상품 좋아요 체크
     @Transactional
@@ -186,5 +200,7 @@ public class SaleService {
         saleLikeRepository.delete(saleLike);
         return SaleLikeResponseDto.of(saleLike, false);
     }
+
+
 
 }
