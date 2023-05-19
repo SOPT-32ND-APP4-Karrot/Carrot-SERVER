@@ -37,4 +37,12 @@ public class UserResponseDto {
                 .nickname(nickname)
                 .build();
     }
+
+    public static UserResponseDto of(Long userId, String nickname, String profileImgUrl) {
+        return UserResponseDto.builder()
+                .userId(userId)
+                .nickname(nickname)
+                .profileImgUrl(profileImgUrl)
+                .build();
+    }
 }

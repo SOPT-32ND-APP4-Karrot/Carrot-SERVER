@@ -27,6 +27,6 @@ public class ChatMessageResponseDto {
                 chatMessage.getContent(),
                 chatMessage.getHasKeyword(),
                 chatMessage.getCreatedAt(),
-                UserResponseDto.of(chatMessage.getWriter()));
+                UserResponseDto.of(chatMessage.getWriter().getUserId(), chatMessage.getWriter().getNickname(), chatMessage.getWriter().getProfileImgUrl()));
     }
 }
