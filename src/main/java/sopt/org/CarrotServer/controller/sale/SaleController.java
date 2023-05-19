@@ -4,8 +4,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import sopt.org.CarrotServer.common.dto.ApiResponse;
 import sopt.org.CarrotServer.controller.sale.dto.request.CreateSaleRequestDto;
+
+import sopt.org.CarrotServer.controller.sale.dto.request.SaleLikeRequestDto;
+import sopt.org.CarrotServer.controller.sale.dto.response.SaleDetailResponseDto;
+import sopt.org.CarrotServer.controller.sale.dto.response.SaleLikeResponseDto;
+import sopt.org.CarrotServer.controller.sale.dto.response.SaleResponseDto;
+import sopt.org.CarrotServer.controller.sale.dto.response.SaleSimpleResponseDto;
 import sopt.org.CarrotServer.controller.sale.dto.response.*;
 import sopt.org.CarrotServer.exception.SuccessStatus;
+import sopt.org.CarrotServer.exception.model.CustomException;
 import sopt.org.CarrotServer.service.sale.SaleService;
 
 import java.util.List;
@@ -35,7 +42,7 @@ public class SaleController {
         return ApiResponse.success(SuccessStatus.READ_SALE_DETAIL_SUCCESS, saleService.getSaleById(saleId));
     }
 
-    //[GET] 상세_광고 조회
+    //[GET] 상세_광고 조회(랜덤)
     @GetMapping("/advertisement")
     public ApiResponse<SaleSimpleResponseDto> getRandomSale() {
         return ApiResponse.success(SuccessStatus.READ_RANDOM_SALE_SUCCESS, saleService.getRandomSale());
