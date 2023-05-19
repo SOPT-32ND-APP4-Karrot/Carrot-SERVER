@@ -13,9 +13,9 @@ import sopt.org.CarrotServer.domain.sale.Sale;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class SaleResponseDto {
-    private Long id;
+    private Long saleId;
     private String title;
-    private String imgUrl;
+    private String saleImgUrl;
     private String location;
     private String time;
     private Boolean isUpdated;
@@ -28,9 +28,9 @@ public class SaleResponseDto {
 
 
     public SaleResponseDto(Long id, String title, String imgUrl, String location, String time, Boolean isUpdated, Integer price, Boolean isDiscount, Integer likeCount, Boolean isCheckLike) {
-        this.id = id;
+        this.saleId = id;
         this.title = title;
-        this.imgUrl = imgUrl;
+        this.saleImgUrl = imgUrl;
         this.location = location;
         this.time = time;
         this.isUpdated = isUpdated;
@@ -49,36 +49,13 @@ public class SaleResponseDto {
     public static SaleResponseDto of(Sale sale) {
 
         return SaleResponseDto.builder()
-                .id(sale.getSaleId())
+                .saleId(sale.getSaleId())
                 .title(sale.getTitle())
-                .imgUrl(sale.getSaleImgUrl())
+                .saleImgUrl(sale.getSaleImgUrl())
                 .price(sale.getPrice())
                 .isSuggest(sale.getIsSuggest())
                 .status(sale.getStatus().getStatus())
                 .build();
     }
-
-    /* public static SaleResponseDto of(Sale sale, String location, Integer likeCount, Boolean isCheckLike) {
-        String time = sale.getCreatedAt();
-        if (sale.getIsUpdated()) {
-            time = sale.getModifiedAt();
-        }
-
-        return SaleResponseDto.builder()
-                .id(sale.getSaleId())
-                .title(sale.getTitle())
-                .imgUrl(sale.getSaleImgUrl())
-                .location(location)
-                .time(time)
-                .isUpdated(sale.getIsUpdated())
-                .price(sale.getPrice())
-                .isDiscount(sale.getIsDiscount())
-                .likeCount(likeCount)
-                .isCheckLike(isCheckLike)
-                .status(sale.getStatus().getStatus())
-                .isSuggest(sale.getIsSuggest())
-                .status(sale.getStatus().getStatus())
-                .build();
-    }*/
 
 }

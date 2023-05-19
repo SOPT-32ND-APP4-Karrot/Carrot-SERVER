@@ -11,7 +11,7 @@ public class SaleLikeRequestDto {
     private Long saleId;  // Optional
     private Long userId;
 
-    public void setSaleId(Long saleId) {
+    public void setSaleId(Long saleId) {  // Path Variable 과 Request Body 방식 모두 가능하도록
         this.saleId = saleId;
     }
 }

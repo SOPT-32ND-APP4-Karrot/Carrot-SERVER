@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import sopt.org.CarrotServer.controller.sale.dto.request.CreateSaleRequestDto;
-import sopt.org.CarrotServer.controller.sale.dto.request.SaleRequestDto;
 import sopt.org.CarrotServer.controller.sale.dto.request.SaleLikeRequestDto;
 import sopt.org.CarrotServer.controller.sale.dto.response.*;
 import sopt.org.CarrotServer.domain.sale.Sale;
@@ -24,8 +23,8 @@ import sopt.org.CarrotServer.exception.model.NotFoundException;
 import sopt.org.CarrotServer.infrastructure.sale.SaleLikeRepository;
 import sopt.org.CarrotServer.infrastructure.sale.SaleRepository;
 import sopt.org.CarrotServer.infrastructure.user.UserRepository;
+import sopt.org.CarrotServer.service.user.UserService;
 
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +39,7 @@ public class SaleService {
     private final UserRepository userRepository;
     private final SaleLikeRepository saleLikeRepository;
     private final SaleRepository saleRepository;
+    private final UserService userService;
     private final AmazonS3Client amazonS3Client;
 
     @Value("${cloud.aws.s3.bucket}")
@@ -48,7 +48,10 @@ public class SaleService {
     //상품 생성
     @Transactional
     public Long createSale(final CreateSaleRequestDto request) {
-        User user = userRepository.findById(Long.valueOf(request.getUserId())).orElseThrow();
+        log.info("userId: " +request.getUserId());
+        User user = userRepository.findById(request.getUserId()).orElseThrow(
+                () -> new NotFoundException(ErrorStatus.NO_EXISTS_USER)
+        );
 
         String saleImgUrl;
         try{
@@ -90,9 +93,7 @@ public class SaleService {
         final List<SaleResponseDto> saleList = new ArrayList<>();
 
         for (Sale sale : saleRepository.findAll()) {
-            User user = userRepository.findById(sale.getUser().getUserId())
-                    .orElseThrow(() -> new NotFoundException(ErrorStatus.NO_EXISTS_USER, ErrorStatus.NO_EXISTS_USER.getMessage()));
-
+            User user = userService.getUser(sale.getUser().getUserId());
             int likeCount = Math.toIntExact(saleLikeRepository.countBySaleLikeIdSaleId(sale.getSaleId()));
 
             //임시로 좋아요는 판매자가 눌렀는지 여부로 구현
@@ -104,7 +105,7 @@ public class SaleService {
                     sale.getTitle(),
                     sale.getSaleImgUrl(),
                     user.getLocation(),
-                    sale.getIsUpdated() ? sale.getModifiedAt() : sale.getCreatedAt(),
+                    sale.getIsUpdated() ? sale.getUpdatedAt() : sale.getCreatedAt(),
                     sale.getIsUpdated(),
                     sale.getPrice(),
                     sale.getIsDiscount(),
@@ -123,9 +124,7 @@ public class SaleService {
         );
 
         //TODO 로직이 겹치는데 어떻게 하는게 좋을지?
-        User user = userRepository.findById(sale.getUser().getUserId()).orElseThrow(
-                () -> new NotFoundException(ErrorStatus.NO_EXISTS_USER, ErrorStatus.NO_EXISTS_USER.getMessage())
-        );
+        User user = userService.getUser(sale.getUser().getUserId());
 
         //TODO 좋아요 수 계산을 sale.getSaleLikeList().size() 이렇게 해도 되는지?
         int likeCount = Math.toIntExact(saleLikeRepository.countBySaleLikeIdSaleId(sale.getSaleId()));
@@ -140,7 +139,7 @@ public class SaleService {
             chatRoomId = sale.getChatRoomList().get(0).getChatRoomId();
         }
 
-        return SaleDetailResponseDto.of(sale, likeCount, isCheckLike, user, chatRoomId);
+;        return SaleDetailResponseDto.of(sale, likeCount, isCheckLike, user, chatRoomId);
     }
 
     //[GET] 상세_광고 조회
@@ -177,11 +176,11 @@ public class SaleService {
     public SaleLikeResponseDto likeSale(SaleLikeRequestDto request) {
 
         User user = userRepository.findById(request.getUserId()).orElseThrow(
-                () -> new CustomException(ErrorStatus.NO_EXISTS_USER)
+                () -> new NotFoundException(ErrorStatus.NO_EXISTS_USER)
         );
 
         Sale sale = saleRepository.findById(request.getSaleId()).orElseThrow(
-                () -> new CustomException(ErrorStatus.NO_EXISTS_SALE)
+                () -> new NotFoundException(ErrorStatus.NO_EXISTS_SALE)
         );
 
         log.info("user정보: " + user.getUserId() + ", sale정보: " + sale.getSaleId());
@@ -197,15 +196,15 @@ public class SaleService {
                     .sale(sale)
                     .user(user)
                     .build();
-//            saleLike.setSale(sale);
             log.info("saleLike 인스턴스 생성 후 " + saleLike.getCreatedAt());
 
             saleLikeRepository.save(saleLike);
-            return SaleLikeResponseDto.of(saleLike, true);
+            SaleLikeResponseDto response = SaleLikeResponseDto.of(saleLike, true);
+            response.setLikeCount(Math.toIntExact(saleLikeRepository.countBySaleLikeIdSaleId(sale.getSaleId())));
+
+            return response;
 
         } catch (NullPointerException e) {
-            throw new CustomException(ErrorStatus.FAILED_TO_CREATE_SALE_LIKE);
-        } catch (Exception e) {
             throw new CustomException(ErrorStatus.FAILED_TO_CREATE_SALE_LIKE);
         }
 
@@ -223,12 +222,14 @@ public class SaleService {
         );
 
         Sale sale = saleRepository.findById(request.getSaleId()).orElseThrow(
-                () -> new CustomException(ErrorStatus.NO_EXISTS_SALE)
+                () -> new NotFoundException(ErrorStatus.NO_EXISTS_SALE)
         );
-        saleLike.deleteSale(sale);
 
         saleLikeRepository.delete(saleLike);
-        return SaleLikeResponseDto.of(saleLike, false);
+        SaleLikeResponseDto response =  SaleLikeResponseDto.of(saleLike, false);
+        response.setLikeCount(Math.toIntExact(saleLikeRepository.countBySaleLikeIdSaleId(sale.getSaleId())));
+
+        return response;
     }
 
 

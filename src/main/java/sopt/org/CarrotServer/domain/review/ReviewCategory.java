@@ -1,10 +1,12 @@
 package sopt.org.CarrotServer.domain.review;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum ReviewCategory {
 
@@ -35,6 +37,7 @@ public enum ReviewCategory {
     ;
 
     private final String name;
+
 
     public static ReviewCategory nameOf(String name) {
         for (ReviewCategory category : ReviewCategory.values()) {

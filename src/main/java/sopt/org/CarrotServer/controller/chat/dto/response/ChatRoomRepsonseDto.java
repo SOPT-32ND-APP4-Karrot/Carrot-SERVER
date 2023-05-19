@@ -27,6 +27,6 @@ public class ChatRoomRepsonseDto {
                 SaleResponseDto.of(chatRoom.getSale()),
                 UserResponseDto.of(chatRoom.getWriter()),
                 chatRoom.getCreatedAt(),
-                chatRoom.getModifiedAt());
+                chatRoom.getUpdatedAt());
     }
 }
